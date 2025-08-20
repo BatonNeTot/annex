@@ -1,2 +1,2 @@
 # annex
-C header only library for containers and meta macros.
+C header only library for meta macros.
