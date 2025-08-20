@@ -1,6 +1,8 @@
 #ifndef ANNEX_H_
 #define ANNEX_H_
 
+#include <inttypes.h>
+
 // Platform related
 
 #if defined(_MSC_VER)
@@ -149,7 +151,7 @@
 // Flow controll
 
 #ifndef ANN_ASSERT
-    #ifdef ANN_INCLUDE_DEFAULT
+    #ifdef ANN_INCLUDE_DEFAULT_ASSERT
         #include <assert.h>
     #endif
     #define ANN_ASSERT(expr) (assert(expr))
@@ -157,9 +159,7 @@
 
 #if !ANN_IS_RELEASE
     #if ANN_COMPILER_MSVC
-        #ifdef ANN_INCLUDE_DEFAULT
-            #include <debugapi.h>
-        #endif
+        #include <debugapi.h>
         #define ANN_DEBUGBREAK() __debugbreak()
     #else
         #define ANN_DEBUGBREAK() do { __asm__ volatile("int $0x03"); int __dummy = 0; (void)__dummy; } while(0) // to stop exactly at the ANN_DEBUGBREAK()
@@ -194,11 +194,11 @@
 #endif
 
 #if ANN_IS_BIG_ENDIAN
-    #define ANN_BE_SWAP(value, size) (value)
-    #define ANN_LE_SWAP(value, size) (__ANN_SWAP_ENDIAN_##size(value))
+    #define ANN_TO_BE_SWAP(value, size) (value)
+    #define ANN_TO_LE_SWAP(value, size) (__ANN_SWAP_ENDIAN_##size(value))
 #else
-    #define ANN_BE_SWAP(value, size) __ANN_SWAP_ENDIAN_##size(value)
-    #define ANN_LE_SWAP(value, size) (value)
+    #define ANN_TO_BE_SWAP(value, size) __ANN_SWAP_ENDIAN_##size(value)
+    #define ANN_TO_LE_SWAP(value, size) (value)
 #endif
 
 #define ANN_HASH(a) ((uint64_t)(a))
