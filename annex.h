@@ -209,14 +209,13 @@
 #define ANN_MAX(a, b) ((a) > (b) ? (a) : (b))
 #define ANN_MIN(a, b) ((a) < (b) ? (a) : (b))
 
-#ifndef ANN_STRUCT_PREFIX
-    #define ANN_STRUCT_PREFIX __struct_
-#endif
 #define ANN_FORWARD(name) typedef struct name name
 #define ANN_DEFINE(name) ANN_FORWARD(name); struct name
 
 #define ANN_ALIGN_FORWARD(size, alignment) (((size) + ((alignment) - 1)) & ~((alignment) - 1))
 #define ANN_ALIGNOF(value) (_Alignof(value))
 #define ANN_ALIGNOF_FORWARD(size, alignment) (size, ANN_ALIGNOF(alignment))
+
+#define ANN_ARRAY_SIZE(array) (sizeof(array) / sizeof(*(array)))
 
 #endif
