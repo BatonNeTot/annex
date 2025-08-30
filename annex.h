@@ -169,16 +169,22 @@
 #endif
 
 #if ANN_COMPILER_MSVC
-    #define ANN_UNREACHABLE() __assume(0);
+    #define __ANN_UNREACHABLE() __assume(0)
 #else
-    #define ANN_UNREACHABLE() __builtin_unreachable();
+    #define __ANN_UNREACHABLE() __builtin_unreachable()
+#endif
+
+#if ANN_IS_DEBUG
+    #define ANN_UNREACHABLE() do { __ANN_UNREACHABLE(); ANN_ASSERT(false && "unreachable"); } while (0)
+#else
+    #define ANN_UNREACHABLE() __ANN_UNREACHABLE()
 #endif
 
 #define ANN_FOREVER while(1)
 
-#define ANN_SWITCH_STRICT(val) switch(val) if (0) { default: ANN_UNREACHABLE(); } else
+#define ANN_SWITCH_STRICT(val) switch(val) if (1) { default: ANN_UNREACHABLE(); } else
 
-#define ANN_NODEFAULT() default: ANN_UNREACHABLE();
+#define ANN_NODEFAULT() do { default: ANN_UNREACHABLE(); break; } while (0)
 
 // Common
 
