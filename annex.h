@@ -71,11 +71,11 @@
 #endif
 
 #ifdef NDEBUG
-    #define ANN_IS_RELEASE 1
-    #define ANN_IS_DEBUG 0
+    #define ANN_BUILD_RELEASE 1
+    #define ANN_BUILD_DEBUG 0
 #else
-    #define ANN_IS_RELEASE 0
-    #define ANN_IS_DEBUG 1
+    #define ANN_BUILD_RELEASE 0
+    #define ANN_BUILD_DEBUG 1
 #endif
 
 #if defined(__BYTE_ORDER) && defined(__ORDER_BIG_ENDIAN__) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__ || \
@@ -157,7 +157,7 @@
     #define ANN_ASSERT(expr) (assert(expr))
 #endif
 
-#if !ANN_IS_RELEASE
+#if !ANN_BUILD_RELEASE
     #if ANN_COMPILER_MSVC
         #include <debugapi.h>
         #define ANN_DEBUGBREAK() __debugbreak()
@@ -174,7 +174,7 @@
     #define __ANN_UNREACHABLE() __builtin_unreachable()
 #endif
 
-#if ANN_IS_DEBUG
+#if ANN_BUILD_DEBUG
     #define ANN_UNREACHABLE() do { __ANN_UNREACHABLE(); ANN_ASSERT(false && "unreachable"); } while (0)
 #else
     #define ANN_UNREACHABLE() __ANN_UNREACHABLE()
