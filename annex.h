@@ -175,7 +175,7 @@
 #endif
 
 #if ANN_BUILD_DEBUG
-    #define ANN_UNREACHABLE() do { __ANN_UNREACHABLE(); ANN_ASSERT(false && "unreachable"); } while (0)
+    #define ANN_UNREACHABLE() do { ANN_ASSERT(false && "unreachable"); __ANN_UNREACHABLE(); } while (0)
 #else
     #define ANN_UNREACHABLE() __ANN_UNREACHABLE()
 #endif
